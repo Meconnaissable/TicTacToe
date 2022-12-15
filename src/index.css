@@ -13,7 +13,7 @@ body {
 
 .headline {
   display: flex;
-  background-color: #145c6ef5;
+  background-color: #1d748af5;
   font-size: 70px;
   padding: 4px;
   justify-content: center;
@@ -67,7 +67,8 @@ button {
 }
 
 button:hover {
-  background-color: rgba(72, 147, 182, 0.616);
+ background-color: rgba(69, 153, 192, 0.616);
+  /* background-color: #1d748af5; */
 }
 
 .button1 {

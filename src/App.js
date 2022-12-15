@@ -4,6 +4,8 @@ import './index';
 import Game from "./components/Game";
 
 function App() {
+
+  
   return (
     <>
       <div className="headline">
