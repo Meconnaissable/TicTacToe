@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 
 export default function Game() {
@@ -7,39 +7,62 @@ export default function Game() {
     const [fields, setFields] = useState(Array(9).fill(""))
     const [player, setPlayer] = useState(true);
 
-    function buttonClick (i){
+    const [winner, setwinner] = useState("")
 
-        fields[i]= player ? "X" : "O"
+    function buttonClick(i) {
+        if (winner !== '') {
+            return
+        }
+
+        fields[i] = player ? "X" : "O"
         console.log(fields)
-        setFields([...fields])
+        setFields([...fields]) /*alter array in neuen*/
         setPlayer(!player)
+
+        setwinner(winningpattern(fields))
+    }
+    /* andere Variante: const buttonClick = (i)=>{}*/
+
+
+    function winningpattern(fields) {
+
+        const pattern = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [2, 4, 6], [0, 4, 8],
+        ]
+
+        //vergleichen, ob gleiches symbol mit einem Gewinnmuster übereinstimmt:
+        for (let [a, b, c] of pattern) {
+            if (fields[a] !== "" && fields[a] === fields[b] && fields[a] === fields[c]) {
+                return fields[a];
+            }
+        }
+        return "";
     }
 
-/*
-    const buttonClick = (i)=>{
+    function newGameClick() {
+        setFields(Array(9).fill(""))
+        setPlayer(true)
+        setwinner("")
     }
-*/
+
+    let title;
+    if (winner === "")
+        title = (<div className="player">Next Player: {player ? "X" : "O"}</div>)
+    else
+        title = (<div className="player">The winner is {winner}</div>)
+
+
     return (
         <><div className="area">
-            <div className="player">Next Player: </div>
+            {title}
             <div className="playarea">
                 <div className="grid-container">
-                    <button className="field" onClick={() => buttonClick(0)} >{fields[0]}</button>
-                    <button className="field" onClick={() => buttonClick(1)} >{fields[1]}</button>
-                    <button className="field" onClick={() => buttonClick(2)} >{fields[2]}</button>
-                </div>
-                <div className="grid-container">
-                    <button className="field" onClick={() => buttonClick(3)} >{fields[3]}</button>
-                    <button className="field" onClick={() => buttonClick(4)} >{fields[4]}</button>
-                    <button className="field" onClick={() => buttonClick(5)} >{fields[5]}</button>
-                </div>
-                <div className="grid-container">
-                    <button className="field" onClick={() => buttonClick(6)} >{fields[6]}</button>
-                    <button className="field" onClick={() => buttonClick(7)} >{fields[7]}</button>
-                    <button className="field" onClick={() => buttonClick(8)} >{fields[8]}</button>
+                    {fields.map((field, index) => (
+                        <button className="field" onClick={() => buttonClick(index)} >{field}</button>
+                    ))}
                 </div>
             </div>
-            <button class="button1" style={{"vertical-align":"middle"}}><span>New Game</span></button>
+            <button class="button1" onClick={() => newGameClick()} >New Game</button>
         </div></>
     );
 }

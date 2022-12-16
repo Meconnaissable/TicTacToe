@@ -1,5 +1,5 @@
 
-import logo from './logo.svg';
+
 import './index';
 import Game from "./components/Game";
 
